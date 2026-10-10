@@ -4,163 +4,173 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
   <title>Panel de Monitoreo | Bulma Admin</title>
 </head>
 <body>
-  <!-- ===================== NAVBAR ===================== -->
-  <nav class="navbar is-primary" role="navigation" aria-label="navegacion principal">
-    <div class="navbar-brand">
-      <a class="navbar-item has-text-weight-bold" href="index.html">&#9632; Bulma Admin</a>
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="menuPrincipal">
-        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
-      </a>
-    </div>
-    <div id="menuPrincipal" class="navbar-menu">
-      <div class="navbar-start">
-        <a class="navbar-item is-active" href="index.html">Dashboard</a>
-        <a class="navbar-item" href="#transacciones">Transacciones</a>
-        <a class="navbar-item" href="#inventario">Inventario</a>
-      </div>
-      <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="field has-addons">
-            <p class="control"><input id="buscador" class="input is-small" type="search" placeholder="Buscar transacción..." /></p>
-          </div>
-        </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">Admin</a>
-          <div class="navbar-dropdown is-right">
-            <a class="navbar-item">Perfil</a>
-            <a class="navbar-item">Configuración</a>
-            <hr class="navbar-divider" />
-            <a class="navbar-item">Cerrar sesión</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
+  <div class="layout">
 
-  <div class="columns is-gapless">
     <!-- ===================== MENU LATERAL ===================== -->
-    <aside class="column is-2 is-hidden-touch has-background-light" style="min-height:calc(100vh - 52px)">
-      <div class="menu p-4">
-        <p class="menu-label">General</p>
-        <ul class="menu-list">
-          <li><a class="is-active" href="#resumen">Resumen</a></li>
-          <li><a href="#graficos">Gráficos</a></li>
-        </ul>
-        <p class="menu-label">Operaciones</p>
-        <ul class="menu-list">
-          <li><a href="#transacciones">Transacciones</a></li>
-          <li><a href="#inventario">Inventario</a></li>
-          <li><a href="#actividad">Actividad</a></li>
-        </ul>
-        <p class="menu-label">Sistema</p>
-        <ul class="menu-list">
-          <li><a href="#">Usuarios</a></li>
-          <li><a href="#">Reportes</a></li>
-        </ul>
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="index.html">
+        <span class="brand-logo">B</span>
+        <span>Bulma<strong>Admin</strong></span>
+      </a>
+
+      <nav class="side-menu">
+        <p class="side-label">General</p>
+        <a class="side-link is-active" href="#resumen"><i data-icon="grid"></i>Resumen</a>
+        <a class="side-link" href="#graficos"><i data-icon="chart"></i>Analítica</a>
+
+        <p class="side-label">Operaciones</p>
+        <a class="side-link" href="#transacciones"><i data-icon="card"></i>Transacciones<span class="side-badge">2</span></a>
+        <a class="side-link" href="#inventario"><i data-icon="box"></i>Inventario</a>
+        <a class="side-link" href="#actividad"><i data-icon="clock"></i>Actividad</a>
+
+        <p class="side-label">Sistema</p>
+        <a class="side-link" href="#"><i data-icon="users"></i>Usuarios</a>
+        <a class="side-link" href="#"><i data-icon="file"></i>Reportes</a>
+        <a class="side-link" href="#"><i data-icon="settings"></i>Configuración</a>
+      </nav>
+
+      <div class="side-card">
+        <p class="side-card-title">Servidor</p>
+        <p class="side-card-text">Todos los sistemas operando con normalidad.</p>
+        <div class="progress-thin"><span style="width:92%"></span></div>
+        <p class="side-card-small">92% de disponibilidad</p>
       </div>
     </aside>
+    <div class="scrim" id="scrim"></div>
 
-    <!-- ===================== CONTENIDO ===================== -->
-    <main class="column p-5">
-      <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul><li><a href="#">Inicio</a></li><li class="is-active"><a href="#" aria-current="page">Dashboard</a></li></ul>
-      </nav>
-      <h1 class="title">Panel de monitoreo</h1>
-      <p class="subtitle is-6">Operaciones internas · actualizado <span id="fecha"></span></p>
+    <div class="content">
+      <!-- ===================== BARRA SUPERIOR ===================== -->
+      <header class="topbar">
+        <a role="button" class="navbar-burger" id="burger" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </a>
+        <div class="search">
+          <i data-icon="search"></i>
+          <input id="buscador" type="search" placeholder="Buscar transacción o cliente..." />
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn" aria-label="Notificaciones"><i data-icon="bell"></i><span class="dot"></span></button>
+          <div class="dropdown is-hoverable is-right">
+            <div class="dropdown-trigger user-chip">
+              <span class="avatar" style="--c:#6c5ce7">AD</span>
+              <span class="is-hidden-mobile"><strong>Admin</strong><small>Administrador</small></span>
+            </div>
+            <div class="dropdown-menu"><div class="dropdown-content">
+              <a class="dropdown-item">Perfil</a>
+              <a class="dropdown-item">Configuración</a>
+              <hr class="dropdown-divider" />
+              <a class="dropdown-item">Cerrar sesión</a>
+            </div></div>
+          </div>
+        </div>
+      </header>
 
-      <!-- KPIs -->
-      <section id="resumen" class="columns is-multiline">
-        <div class="column is-3-desktop is-6-tablet">
-          <div class="box">
-            <p class="heading">Ventas del mes</p>
-            <p class="title is-4" id="kpiVentas">L 0</p>
-            <span class="tag is-success is-light">▲ 12.4%</span>
+      <main class="main">
+        <!-- Bienvenida -->
+        <section class="welcome">
+          <div>
+            <p class="welcome-date" id="fecha"></p>
+            <h1>Buen día, Admin</h1>
+            <p>Tienes <strong id="kpiPendientes2">2</strong> transacciones pendientes y 1 alerta de inventario.</p>
           </div>
-        </div>
-        <div class="column is-3-desktop is-6-tablet">
-          <div class="box">
-            <p class="heading">Pedidos</p>
-            <p class="title is-4" id="kpiPedidos">0</p>
-            <span class="tag is-success is-light">▲ 5.1%</span>
+          <div class="welcome-actions">
+            <a class="button is-light is-rounded" href="#transacciones">Revisar pendientes</a>
+            <a class="button is-primary-ghost is-rounded" href="#graficos">Ver analítica</a>
           </div>
-        </div>
-        <div class="column is-3-desktop is-6-tablet">
-          <div class="box">
-            <p class="heading">Pendientes</p>
-            <p class="title is-4" id="kpiPendientes">0</p>
-            <span class="tag is-warning is-light">Requieren atención</span>
-          </div>
-        </div>
-        <div class="column is-3-desktop is-6-tablet">
-          <div class="box">
-            <p class="heading">Tasa de error</p>
-            <p class="title is-4">0.8%</p>
-            <span class="tag is-danger is-light">▲ 0.2%</span>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Graficos -->
-      <section id="graficos" class="columns">
-        <div class="column is-8">
-          <div class="box">
-            <h2 class="title is-5">Ventas por mes</h2>
-            <canvas id="graficoVentas" height="110"></canvas>
-          </div>
-        </div>
-        <div class="column is-4">
-          <div class="box">
-            <h2 class="title is-5">Métodos de pago</h2>
-            <canvas id="graficoPagos"></canvas>
-          </div>
-        </div>
-      </section>
+        <!-- KPIs -->
+        <section id="resumen" class="kpis">
+          <article class="kpi">
+            <div class="kpi-top"><span class="kpi-icon" style="--c:#6c5ce7"><i data-icon="dollar"></i></span><span class="tag is-success is-light is-rounded">▲ 12.4%</span></div>
+            <p class="kpi-label">Ventas del mes</p>
+            <p class="kpi-value" id="kpiVentas">L 0</p>
+            <canvas class="spark" id="spark1" height="38"></canvas>
+          </article>
+          <article class="kpi">
+            <div class="kpi-top"><span class="kpi-icon" style="--c:#00b894"><i data-icon="bag"></i></span><span class="tag is-success is-light is-rounded">▲ 5.1%</span></div>
+            <p class="kpi-label">Pedidos</p>
+            <p class="kpi-value" id="kpiPedidos">0</p>
+            <canvas class="spark" id="spark2" height="38"></canvas>
+          </article>
+          <article class="kpi">
+            <div class="kpi-top"><span class="kpi-icon" style="--c:#f0a30a"><i data-icon="clock"></i></span><span class="tag is-warning is-light is-rounded">Atención</span></div>
+            <p class="kpi-label">Pendientes</p>
+            <p class="kpi-value" id="kpiPendientes">0</p>
+            <canvas class="spark" id="spark3" height="38"></canvas>
+          </article>
+          <article class="kpi">
+            <div class="kpi-top"><span class="kpi-icon" style="--c:#e5484d"><i data-icon="alert"></i></span><span class="tag is-danger is-light is-rounded">▲ 0.2%</span></div>
+            <p class="kpi-label">Tasa de error</p>
+            <p class="kpi-value">0.8%</p>
+            <canvas class="spark" id="spark4" height="38"></canvas>
+          </article>
+        </section>
 
-      <!-- Tabla transaccional -->
-      <section id="transacciones" class="box">
-        <div class="level">
-          <div class="level-left"><h2 class="title is-5 mb-0">Últimas transacciones</h2></div>
-          <div class="level-right">
-            <div class="tabs is-toggle is-small mb-0">
-              <ul id="filtros">
-                <li class="is-active"><a data-filtro="todas">Todas</a></li>
-                <li><a data-filtro="Completada">Completadas</a></li>
-                <li><a data-filtro="Pendiente">Pendientes</a></li>
-                <li><a data-filtro="Rechazada">Rechazadas</a></li>
-              </ul>
+        <!-- Graficos -->
+        <section id="graficos" class="grid-2">
+          <div class="card-x">
+            <div class="card-head">
+              <div><h2>Ventas por mes</h2><p>Ingresos en lempiras</p></div>
+              <div class="seg" id="periodo">
+                <button class="is-active" data-p="6">6M</button>
+                <button data-p="12">12M</button>
+              </div>
+            </div>
+            <div class="chart-box"><canvas id="graficoVentas"></canvas></div>
+          </div>
+          <div class="card-x">
+            <div class="card-head"><div><h2>Métodos de pago</h2><p>Distribución de ingresos</p></div></div>
+            <div class="donut-box"><canvas id="graficoPagos"></canvas></div>
+            <ul class="legend" id="leyendaPagos"></ul>
+          </div>
+        </section>
+
+        <!-- Tabla transaccional -->
+        <section id="transacciones" class="card-x">
+          <div class="card-head">
+            <div><h2>Últimas transacciones</h2><p id="contador"></p></div>
+            <div class="seg" id="filtros">
+              <button class="is-active" data-filtro="todas">Todas</button>
+              <button data-filtro="Completada">Completadas</button>
+              <button data-filtro="Pendiente">Pendientes</button>
+              <button data-filtro="Rechazada">Rechazadas</button>
             </div>
           </div>
-        </div>
-        <div class="table-container">
-          <table class="table is-fullwidth is-hoverable is-striped">
-            <thead><tr><th>ID</th><th>Cliente</th><th>Fecha</th><th>Monto</th><th>Estado</th></tr></thead>
-            <tbody id="tablaTransacciones"></tbody>
-          </table>
-        </div>
-      </section>
+          <div class="table-container">
+            <table class="table is-fullwidth is-hoverable tabla">
+              <thead><tr><th>ID</th><th>Cliente</th><th>Fecha</th><th class="has-text-right">Monto</th><th>Estado</th></tr></thead>
+              <tbody id="tablaTransacciones"></tbody>
+            </table>
+          </div>
+        </section>
 
-      <div class="columns">
-        <!-- Inventario -->
-        <section id="inventario" class="column is-6">
-          <div class="box">
-            <h2 class="title is-5">Inventario</h2>
+        <section class="grid-3">
+          <div id="inventario" class="card-x">
+            <div class="card-head"><div><h2>Inventario</h2><p>Nivel de stock</p></div></div>
             <div id="listaInventario"></div>
           </div>
-        </section>
-        <!-- Actividad -->
-        <section id="actividad" class="column is-6">
-          <div class="box">
-            <h2 class="title is-5">Actividad reciente</h2>
-            <div id="listaActividad"></div>
+          <div id="actividad" class="card-x">
+            <div class="card-head"><div><h2>Actividad reciente</h2><p>Últimos eventos</p></div></div>
+            <ul class="timeline" id="listaActividad"></ul>
+          </div>
+          <div class="card-x goal">
+            <div class="card-head"><div><h2>Meta mensual</h2><p>Objetivo L 1,000,000</p></div></div>
+            <div class="ring-box"><canvas id="graficoMeta"></canvas><div class="ring-center"><strong>78%</strong><span>completado</span></div></div>
+            <p class="goal-note">Faltan <strong>L 220,000</strong> para alcanzar la meta.</p>
           </div>
         </section>
-      </div>
-    </main>
-  </div>
 
+        <p class="foot">Panel de monitoreo · datos de demostración</p>
+      </main>
+    </div>
+  </div>
   <script type="module" src="/src/main.js"></script>
 </body>
 </html>
