@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>Panel de Monitoreo | Bulma Admin</title>
+</head>
+<body>
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="navbar is-primary" role="navigation" aria-label="navegacion principal">
+    <div class="navbar-brand">
+      <a class="navbar-item has-text-weight-bold" href="index.html">&#9632; Bulma Admin</a>
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="menuPrincipal">
+        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div id="menuPrincipal" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item is-active" href="index.html">Dashboard</a>
+        <a class="navbar-item" href="#transacciones">Transacciones</a>
+        <a class="navbar-item" href="#inventario">Inventario</a>
+      </div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="field has-addons">
+            <p class="control"><input id="buscador" class="input is-small" type="search" placeholder="Buscar transacción..." /></p>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">Admin</a>
+          <div class="navbar-dropdown is-right">
+            <a class="navbar-item">Perfil</a>
+            <a class="navbar-item">Configuración</a>
+            <hr class="navbar-divider" />
+            <a class="navbar-item">Cerrar sesión</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="columns is-gapless">
+    <!-- ===================== MENU LATERAL ===================== -->
+    <aside class="column is-2 is-hidden-touch has-background-light" style="min-height:calc(100vh - 52px)">
+      <div class="menu p-4">
+        <p class="menu-label">General</p>
+        <ul class="menu-list">
+          <li><a class="is-active" href="#resumen">Resumen</a></li>
+          <li><a href="#graficos">Gráficos</a></li>
+        </ul>
+        <p class="menu-label">Operaciones</p>
+        <ul class="menu-list">
+          <li><a href="#transacciones">Transacciones</a></li>
+          <li><a href="#inventario">Inventario</a></li>
+          <li><a href="#actividad">Actividad</a></li>
+        </ul>
+        <p class="menu-label">Sistema</p>
+        <ul class="menu-list">
+          <li><a href="#">Usuarios</a></li>
+          <li><a href="#">Reportes</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ===================== CONTENIDO ===================== -->
+    <main class="column p-5">
+      <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul><li><a href="#">Inicio</a></li><li class="is-active"><a href="#" aria-current="page">Dashboard</a></li></ul>
+      </nav>
+      <h1 class="title">Panel de monitoreo</h1>
+      <p class="subtitle is-6">Operaciones internas · actualizado <span id="fecha"></span></p>
+
+      <!-- KPIs -->
+      <section id="resumen" class="columns is-multiline">
+        <div class="column is-3-desktop is-6-tablet">
+          <div class="box">
+            <p class="heading">Ventas del mes</p>
+            <p class="title is-4" id="kpiVentas">L 0</p>
+            <span class="tag is-success is-light">▲ 12.4%</span>
+          </div>
+        </div>
+        <div class="column is-3-desktop is-6-tablet">
+          <div class="box">
+            <p class="heading">Pedidos</p>
+            <p class="title is-4" id="kpiPedidos">0</p>
+            <span class="tag is-success is-light">▲ 5.1%</span>
+          </div>
+        </div>
+        <div class="column is-3-desktop is-6-tablet">
+          <div class="box">
+            <p class="heading">Pendientes</p>
+            <p class="title is-4" id="kpiPendientes">0</p>
+            <span class="tag is-warning is-light">Requieren atención</span>
+          </div>
+        </div>
+        <div class="column is-3-desktop is-6-tablet">
+          <div class="box">
+            <p class="heading">Tasa de error</p>
+            <p class="title is-4">0.8%</p>
+            <span class="tag is-danger is-light">▲ 0.2%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Graficos -->
+      <section id="graficos" class="columns">
+        <div class="column is-8">
+          <div class="box">
+            <h2 class="title is-5">Ventas por mes</h2>
+            <canvas id="graficoVentas" height="110"></canvas>
+          </div>
+        </div>
+        <div class="column is-4">
+          <div class="box">
+            <h2 class="title is-5">Métodos de pago</h2>
+            <canvas id="graficoPagos"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabla transaccional -->
+      <section id="transacciones" class="box">
+        <div class="level">
+          <div class="level-left"><h2 class="title is-5 mb-0">Últimas transacciones</h2></div>
+          <div class="level-right">
+            <div class="tabs is-toggle is-small mb-0">
+              <ul id="filtros">
+                <li class="is-active"><a data-filtro="todas">Todas</a></li>
+                <li><a data-filtro="Completada">Completadas</a></li>
+                <li><a data-filtro="Pendiente">Pendientes</a></li>
+                <li><a data-filtro="Rechazada">Rechazadas</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="table is-fullwidth is-hoverable is-striped">
+            <thead><tr><th>ID</th><th>Cliente</th><th>Fecha</th><th>Monto</th><th>Estado</th></tr></thead>
+            <tbody id="tablaTransacciones"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="columns">
+        <!-- Inventario -->
+        <section id="inventario" class="column is-6">
+          <div class="box">
+            <h2 class="title is-5">Inventario</h2>
+            <div id="listaInventario"></div>
+          </div>
+        </section>
+        <!-- Actividad -->
+        <section id="actividad" class="column is-6">
+          <div class="box">
+            <h2 class="title is-5">Actividad reciente</h2>
+            <div id="listaActividad"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
